@@ -1,0 +1,7 @@
+In Node.js, a child process is an independent operating system process that can be spawned to run CPU - intensive, I / O - intensive, or external tasks.
+
+Why Use Child Processes?
+There are several compelling reasons to use child processes in Node.js applications:
+- Concurrency: Child processes allow for concurrent task execution, optimizing system resources.
+- Isolation: Child processes provide isolation, preventing failures from affecting the main app.
+- Parallelism: Parallel execution can be improved with child processes, which perform multiple operations simultaneously.

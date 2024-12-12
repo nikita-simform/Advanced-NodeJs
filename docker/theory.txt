@@ -1,0 +1,42 @@
+--it: to interact with image please provide a terminal
+--name: name of the container
+-e: environment variable
+-d: detach mode - whenever a container sipns off it keeps your terminal busy and if you want your terminal to run in background then we can use this mode
+docker ps: list all the running container
+docker ps -a: list all running and stopped container
+docker container prune: remove all stopped container
+exexcute command in container: docker exec -it container-id/container-name command
+
+
+docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+docker stop container-id/container-name
+
+port mapping in docker: when we run two instance of same image it exposes same port, so we can do port mapping with our local machine
+docker run --name my-postgress -p 4000:5432 -d postgres (4000 is the local port and 5432 is the exposed port)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+docker run 
+-p 27017:27107
+-e MONGO_INITDB_ROOT_USERNAME=admin 
+-e MONGO_INITDB_ROOT_PASSWORD=password 
+--name mongodb-container 
+--net mongo-network 
+-d mongo
+
+docker run -d \
+-p 8081:8081 \
+-e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
+-e ME_CONFIG_MONGODB_ADMINPASSWORD=password \
+-e ME_CONFIG_MONGODB_SERVER=mongodb-container \
+--net mongo-network \
+--name mongo-express \
+
+below two commands will create mongodb container and mongo-express container in same network and both can interact with each other, i.e we can run express app with mongodb connection in same network
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+docker-compose -f docker-compose.yaml up // to run docker compose 
+
+docker build -t nikitasimform/web-socket-server:0.0.1.RELEASE .
+-t for tag
+. in last means the dockerfile is in current directory

@@ -1,0 +1,49 @@
+redis is in-memory database, so it is very fast and can be used for caching purpose
+redis is a key-value database, so we can store any kind of data in it
+
+docker image:
+docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
+
+go to redis-cli:
+docker exec -it <container-id> bash
+and then execute redis-cli
+
+set <key> <value>
+set name  Nikita
+output: OK
+
+get <key>
+get name
+output:Nikita
+
+best practices to store key value pair in redis:
+key should be in format <entity>:<id>
+
+set msg:1 hello nx --> nx means it will set the value of given key if it does not exist
+
+mget msg:1 msg:2 msg:3 --> it will return all the values of given keys
+mset -->set multiple key value pair
+
+lists:
+lpush --> push value to the left of the list
+lpush messages hey
+lpop --> pop value from the left of the list
+lpop messages
+llen --> return the length of the list
+llen messages
+lmove --> move the value to the left of the list
+
+blpop --> pop value from the left of the list in blocking mode
+blpop messages 10 --> if list is empty it will wait for 10 seconds and if in 10 sec if any value enters in list it will pop that value
+
+lrange --> return the list of values from start to end
+lrange messages 0 -1 --> return all the values of the list from start to end
+
+sadd <key> <value> --> add the value to the set
+srem <key> <value> --> remove the value from the set
+sismember <key> <value> --> check if the value exists in the set
+
+sadd=>unordered set
+zadd <key> <score> <value> --> add the value to the sorted set
+
+dataType documentation:https://redis.io/docs/latest/develop/data-types/hashes/

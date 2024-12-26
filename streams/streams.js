@@ -26,6 +26,7 @@ app.get('/write-stream', (req, res) => {
   });
 })
 
+//ab - n 10 - c 5 http://localhost:4001/read-file
 // curl http://localhost:4001/read-file
 app.get('/read-file', (req, res) => {
   fs.readFile('./big.file', (err, data) => {
@@ -34,6 +35,8 @@ app.get('/read-file', (req, res) => {
   });
 })
 
+
+// ab - n 10 - c 5 http://localhost:4001/read-stream
 // curl http://localhost:4001/read-stream
 app.get('/read-stream', (req, res) => {
   const src = fs.createReadStream('./big.file');

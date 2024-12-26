@@ -1,10 +1,12 @@
-import { Button } from "@mui/base"
-import { TextField, Typography } from "@mui/material"
-import { Container } from "@mui/system"
-import { useEffect, useMemo, useState } from "react"
-import { io } from "socket.io-client"
+import { Button, Form, Input, Typography } from "antd";
+import { useEffect, useMemo, useState } from "react";
+import { Container } from "react-bootstrap";
+import { io } from "socket.io-client";
+
+const { Title, Paragraph } = Typography;
 
 const App = () => {
+
   const socket = useMemo(() => io("http://localhost:5000", {
     withCredentials: true
   }), [])
@@ -32,39 +34,70 @@ const App = () => {
     // }
   }, [])
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     socket.emit('message', { message, room })
     setMessage("")
   }
   const joinRoomHandler = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     socket.emit("join-room", roomName);
     setRoomName("")
   }
   return (
     <>
-      <Container maxWidth="sm">
-        <Typography variant="h1" component="div" gutterBottom>
-          Welcome to Socket.io
-        </Typography>
-        <Typography variant="h6" component="div" gutterBottom>
-          {socketId}
-        </Typography>
-        <form onSubmit={joinRoomHandler}>
-          <h5>
-            Join Room
-          </h5>
-          <TextField id="outlined-basic" label="room name" variant="outlined" value={roomName} onChange={(e) => setRoomName(e.target.value)} autoComplete="off" />
-          <Button type="submit" variant="contained" color="primary">Join</Button>
-        </form>
-        <form onSubmit={handleSubmit}>
-          <TextField id="outlined-basic" label="message" variant="outlined" value={message} onChange={(e) => setMessage(e.target.value)} autoComplete="off" />
-          <TextField id="outlined-basic" label="room" variant="outlined" value={room} onChange={(e) => setRoom(e.target.value)} autoComplete="off" />
-          <Button type="submit" variant="contained" color="primary">Send</Button>
-        </form>
-        <div>{messageList.map((message) => {
-          return <div key={message.message}>{message.message}</div>
-        })}</div>
+      <Container>
+        <Title level={1}>Welcome to Socket.io</Title>
+        <Paragraph>{socketId}</Paragraph>
+
+        {/* Join Room Form */}
+        <Form onFinish={joinRoomHandler} layout="vertical">
+          <Title level={5}>Join Room</Title>
+          <Form.Item label="Room Name" name="roomName">
+            <Input
+              placeholder="Enter room name"
+              value={roomName}
+              onChange={(e) => setRoomName(e.target.value)}
+              autoComplete="off"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Join
+            </Button>
+          </Form.Item>
+        </Form>
+
+        {/* Send Message Form */}
+        <Form onFinish={handleSubmit} layout="vertical">
+          <Form.Item label="Message" name="message">
+            <Input
+              placeholder="Enter your message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              autoComplete="off"
+            />
+          </Form.Item>
+          <Form.Item label="Room" name="room">
+            <Input
+              placeholder="Enter room"
+              value={room}
+              onChange={(e) => setRoom(e.target.value)}
+              autoComplete="off"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Send
+            </Button>
+          </Form.Item>
+        </Form>
+
+        {/* Message List */}
+        <div>
+          {messageList.map((message, index) => (
+            <Paragraph key={index}>{message.message}</Paragraph>
+          ))}
+        </div>
       </Container>
 
     </>

@@ -1,0 +1,21 @@
+-----------------------------------------
+there are two methods to create schema:
+1. interospection
+
+In this first will create the tabel in database and then will execute npx prisma db pull
+This way data modal(in schema.prisma) would be create based on the table exsist in database
+
+2.Migrantion
+In this will first create data modal in schema.prisma file and the will run migration to reflect the table into database
+npx prisma migrate dev --name init
+
+-----------------------------------------
+
+npm prisma studio --> to watch prisma UI(tables)
+
+
+-----------------------------------------
+steps:
+docker compose up
+npx prism migrate dev --name create_user_schema or yarn prism migrate dev --name create_user_schema
+npm start

@@ -88,7 +88,7 @@ export const deletePost = async (req, res) => {
   return res.json({ status: 200, msg: "Post deleted successfully" });
 };
 
-// * To Seach the post
+// * To Search the post
 export const searchPost = async (req, res) => {
   const query = req.query.q;
   const posts = await prisma.post.findMany({

@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int       @id @default(autoincrement()) //@id for primary key
+  name       String?  // optional @@map("firstName") 
+  email      String    @unique //unique column
+  password   String?
+  post       Post[]
+  comment    Comment[]
+  created_at DateTime  @default(now()) 
+  // @@map("users") //@@map is used to create different name of table, here users table will be created instead of user
+
+}
+model Post {
+  id            Int       @id @default(autoincrement())
+  user          User      @relation(fields: [user_id], references: [id], onDelete: Cascade) //if user is deleted, all the posts will be deleted as well
+  comment       Comment[]
+  user_id       Int
+  title         String
+  description   String
+  comment_count Int       @default(0)
+  created_at    DateTime  @default(now())
+}
+
+model Comment {
+  id         String   @id @default(uuid())
+  post       Post     @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  post_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id    Int
+  comment    String
+  created_at DateTime @default(now())
+}
+//define enum
+// enum Role{
+//   User
+//   Admin
+// }
+//npx prism migrate dev --name create_user_schema

@@ -13,7 +13,9 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.16",
+    "antd": "^5.22.6",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.10.7",
     "react-dom": "^18.2.0",
     "socket.io-client": "^4.7.5"
   },

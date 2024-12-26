@@ -40,3 +40,5 @@ docker-compose -f docker-compose.yaml up // to run docker compose
 docker build -t nikitasimform/web-socket-server:0.0.1.RELEASE .
 -t for tag
 . in last means the dockerfile is in current directory
+
+docker push nikitasimform/web-socket-server:0.0.1.RELEASE
